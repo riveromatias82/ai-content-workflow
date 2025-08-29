@@ -1,18 +1,25 @@
-# 🚀 Fullstack Engineer Challenge – Music Licensing Workflow
+# 🚀 Fullstack Engineer Challenge – AI Content Workflow
 
-Welcome to the **Fullstack Engineer Challenge!** 🎸🎬  
-In this challenge, you'll help the fictional company **ACME BROS PICTURES** build a system to manage the **music licensing process** for their movies.
+Welcome to the **Fullstack Engineer Challenge!** 🤖📝  
+In this challenge, you'll help the fictional company **ACME GLOBAL MEDIA** build a system to manage the **content creation and review workflow** for their international campaigns — powered by **AI**.
 
 ## 🎯 Context
 
-Each movie scene can contain **multiple music tracks**, and each track requires licensing. The licensing process involves back-and-forth negotiations with rights holders (artists or labels), which makes tracking each license's progress essential.
+ACME GLOBAL MEDIA produces ads, micro-sites, and marketing materials in multiple languages.  
+Traditionally, creating and translating this content is slow and error-prone. They want to experiment with **LLMs** to:
 
-Your task is to create a simple system to:
+- Generate initial content drafts (headlines, product descriptions, etc.).
+- Translate and localize content into multiple languages.
+- Extract structured data (keywords, tone, sentiment).
+- Keep a **review workflow** where humans can accept, edit, or reject AI suggestions.
 
-- Manage **tracks** for each movie scene.
-- Associate a **song** to each track, specifying its start and end time.
-- Track the **licensing status** of each song via a stateful workflow.
-- Provide a way for other users to **immediately see updates** in licensing status (real-time or near real-time visibility).
+Your task is to build a simple system to:
+
+- Manage **campaigns** (each with multiple content pieces).
+- Generate **AI-powered drafts** for a content piece using OpenAI or Anthropic.
+- Provide **translation/localization** suggestions via AI.
+- Track a **review state** (Draft → Suggested by AI → Reviewed → Approved/Rejected).
+- Show updates to all users in real-time.
 
 ## 📌 Requirements
 
@@ -20,45 +27,39 @@ Your task is to create a simple system to:
 
 > ⚡ **Must Include** - Use the following technologies, aligned with our tech stack:
 
-- **Backend:** You can use any stack you're comfortable with, but we recommend using any of the following:
-  - TypeScript + NestJS (you can use Fastify or Koa if you prefer)
-  - Python + FastAPI (you can use Flask or Django if you prefer)
-  - Go + Fiber (you can use Gin or Echo if you prefer)
-- **API:** REST and/or GraphQL (you choose, and justify your choice if you only use one)
-- **Frontend:** React (using any framework such as Next.js, Remix, or bare metal with Vite)
-- **Database:** PostgreSQL (primary), MongoDB (optional if needed)
-- **Containerization:** Docker (required)
-- **Bonus:** Kafka, Redis, ArgoCD, Kubernetes (if you want to go further)
+- **Backend:** You can use any stack you're comfortable with, but we recommend:
+  - TypeScript + NestJS (Fastify/Koa also valid)  
+  - Python + FastAPI (Flask/Django also valid)  
+  - Go + Fiber (Gin/Echo also valid)  
+- **API:** REST and/or GraphQL (justify your choice if only one)  
+- **Frontend:** React (Next.js, Remix, or Vite)  
+- **Database:** PostgreSQL (primary), MongoDB (optional if needed)  
+- **Containerization:** Docker (required)  
+- **AI Integrations:** OpenAI and/or Anthropic SDKs (required)  
+- **Bonus:** LangChain, Kafka, Redis, ArgoCD, Kubernetes  
 
 ### 📦 Deliverables
 
 > 📥 **Your submission must be a Pull Request that includes:**
 
-- A **backend** exposing the required APIs.
-- A **data model** to manage:
-  - Movies, scenes, tracks, songs, and their licensing states.
-- Endpoints or queries/mutations to:
-  - Create a track and associate a song.
-  - Update the licensing state of a track.
-  - Query all tracks for a given scene/movie, including licensing status.
+- A **backend API** that supports:
+  - Creating a campaign and its content pieces.
+  - Generating AI drafts (titles, descriptions, translations).
+  - Updating the review state of content.
+  - Querying campaigns with their content and review states.
 - A **frontend built with React** to:
-  - Visualize the movie scenes and associated tracks.
-  - Show licensing status.
-  - Allow status updates (basic UI).
-- Suggest a real-time implementation using WebSockets, GraphQL Subscriptions, or Server-Sent Events.
+  - Display a campaign dashboard.
+  - Trigger AI draft generation.
+  - Provide UI to review/edit/approve/reject drafts.
+  - Show updates in real-time.
 - Docker setup to run the entire app locally.
 - A `README.md` with:
-  - Setup instructions
-  - Tech decisions and tradeoffs
-  - If applicable, your reasoning for using REST, GraphQL, or both
+  - Setup instructions.
+  - Tech decisions and tradeoffs.
+  - If applicable, reasoning for REST, GraphQL, or both.
+- A `docs/` folder for any diagrams, workflows, or extra notes.
 
-> [!TIP]
-> Use the `docs` folder to store any additional documentation or diagrams that help explain your solution.
-> Mention any assumptions or constraints in your `README.md`.
-
-### 📂 Folder Suggestions
-
-You can organize your project like this (suggested but not mandatory):
+### 📂 Suggested Folder Structure
 
 ```txt
 /
@@ -79,26 +80,22 @@ You can organize your project like this (suggested but not mandatory):
 ├── README.md
 ├── .prettierrc.js
 ├── eslint.config.mjs
-└── . . .
-```
+└── ...
+````
 
 ## 🌟 Nice to Have
 
 > 💡 **Bonus Points For:**
 
-- Automated testing and CI pipeline using GitHub Actions.
-- Unit or integration tests for API or key logic.
-- Use of MongoDB for unstructured metadata (if justified).
-- Real-time suggestion implemented (e.g., via GraphQL subscriptions or WebSockets).
-- Basic usage of **Kafka or Redis** (e.g., async event messaging).
-- Usage of ArgoCD or Kubernetes (not expected, but definitely cool).
-
-> [!TIP]
-> Looking for inspiration or additional ideas to earn extra points? Check out our **[Awesome NaNLABS repository](https://github.com/nanlabs/awesome-nan)** for reference projects and best practices! 🚀
+* Using **LangChain** to chain AI tasks (generate → translate → summarize).
+* Supporting **multi-model comparison** (OpenAI vs Anthropic).
+* Real-time features with WebSockets, GraphQL Subscriptions, or SSE.
+* Automated testing & GitHub Actions CI pipeline.
+* Unit/integration tests for API or AI-related logic.
+* Using Redis/Kafka for async event messaging.
+* Deploy manifests for Kubernetes or ArgoCD.
 
 ## 🧪 Submission Guidelines
-
-> 📌 **Follow these steps to submit your solution:**
 
 1. **Fork this repository.**
 2. **Create a feature branch** for your implementation.
@@ -110,23 +107,23 @@ You can organize your project like this (suggested but not mandatory):
 
 > 🔍 **What we'll be looking at:**
 
-- Ability to **work across the stack** (NestJS, PostgreSQL, React/Next.js/. . .).
-- Clean, modular and maintainable code with proper Git usage.
-- A good understanding of **data modeling and workflow management**.
-- Clear written communication in your README.
-- Ability to **propose real-time solutions**, even if not implemented.
+* Ability to work **across the stack** (NestJS/FastAPI/Go + PostgreSQL + React).
+* Integration of **AI features** in a clean, modular way.
+* Clear **data modeling** and workflow management.
+* **Human-in-the-loop UX** for reviewing AI content.
+* Documentation of assumptions, tradeoffs, and AI design choices.
+* Creativity in using AI to enhance the workflow.
 
 ## 💬 Final Notes
 
-> [!TIP]
-> This challenge is designed to be flexible!
+This challenge is designed to be **flexible**. Some tips:
 
-Here are some tips to help you succeed:
+* If you’re stronger in backend, focus there but add a simple UI.
+* If you’re stronger in frontend, ensure your backend has clean APIs.
+* Time-box your work — we want to see **how you think and solve problems**, not perfection.
+* Surprise us with creative uses of AI! 🎉
 
-- If you feel confident on the backend but less on the frontend, focus there—but try to show some basic UI.
-- Likewise, if you're stronger on the frontend, make sure your backend has clean structure and endpoints.
-- Time-box it: we don’t expect perfection. We want to see **how you think and solve problems**.
+## 🏁 Good luck and have fun building!
 
-## 🏁 Good luck and have fun building
 
-If you have any questions, feel free to reach out.
+```
