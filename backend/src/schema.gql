@@ -1,0 +1,201 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+enum AiProvider {
+  ANTHROPIC
+  LANGCHAIN
+  OPENAI
+}
+
+type Campaign {
+  contentPieces: [ContentPiece!]!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  status: CampaignStatus!
+  targetLanguages: [String!]!
+  targetMarkets: [String!]!
+  updatedAt: DateTime!
+}
+
+type CampaignStats {
+  aiSuggestedCount: Float!
+  approvedCount: Float!
+  draftCount: Float!
+  rejectedCount: Float!
+  totalContentPieces: Float!
+  underReviewCount: Float!
+}
+
+enum CampaignStatus {
+  ACTIVE
+  ARCHIVED
+  COMPLETED
+  DRAFT
+}
+
+type ContentPiece {
+  briefing: String
+  campaign: Campaign!
+  campaignId: String!
+  createdAt: DateTime!
+  id: ID!
+  keywords: [String!]!
+  reviewState: ReviewState!
+  sourceLanguage: String!
+  targetAudience: String
+  title: String!
+  tone: String
+  type: ContentType!
+  updatedAt: DateTime!
+  versions: [ContentVersion!]!
+}
+
+enum ContentType {
+  AD_COPY
+  BLOG_TITLE
+  DESCRIPTION
+  EMAIL_SUBJECT
+  HEADLINE
+  PRODUCT_DESCRIPTION
+  SOCIAL_POST
+}
+
+type ContentVersion {
+  aiMetadata: JSONObject
+  aiModel: String
+  aiProvider: AiProvider
+  content: String!
+  contentPiece: ContentPiece!
+  contentPieceId: String!
+  createdAt: DateTime!
+  id: ID!
+  isActive: Boolean!
+  language: String!
+  reviewNotes: String
+  sentimentAnalysis: JSONObject
+  type: VersionType!
+  updatedAt: DateTime!
+  version: Float!
+}
+
+input CreateCampaignInputType {
+  description: String
+  name: String!
+  targetLanguages: [String!]
+  targetMarkets: [String!]
+}
+
+input CreateContentPieceInputType {
+  briefing: String
+  campaignId: String!
+  keywords: [String!]
+  sourceLanguage: String
+  targetAudience: String
+  title: String!
+  tone: String
+  type: ContentType!
+}
+
+input CreateManualVersionInputType {
+  content: String!
+  contentPieceId: String!
+  language: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GenerateAiContentInputType {
+  contentPieceId: String!
+  provider: AiProvider
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type Mutation {
+  createCampaign(createCampaignInput: CreateCampaignInputType!): Campaign!
+  createContentPiece(createContentPieceInput: CreateContentPieceInputType!): ContentPiece!
+  createManualVersion(createManualVersionInput: CreateManualVersionInputType!): ContentVersion!
+  generateAiContent(generateAiContentInput: GenerateAiContentInputType!): ContentVersion!
+  removeCampaign(id: ID!): Boolean!
+  removeContentPiece(id: ID!): Boolean!
+  setActiveVersion(id: ID!): ContentVersion!
+  translateContent(translateContentInput: TranslateContentInputType!): ContentVersion!
+  updateCampaign(id: ID!, updateCampaignInput: UpdateCampaignInputType!): Campaign!
+  updateContentPiece(id: ID!, updateContentPieceInput: UpdateContentPieceInputType!): ContentPiece!
+  updateVersion(updateVersionInput: UpdateVersionInputType!): ContentVersion!
+}
+
+type Query {
+  campaign(id: ID!): Campaign!
+  campaignStats(id: ID!): CampaignStats!
+  campaigns: [Campaign!]!
+  contentPiece(id: ID!): ContentPiece!
+  contentPieces: [ContentPiece!]!
+  contentPiecesByCampaign(campaignId: ID!): [ContentPiece!]!
+}
+
+enum ReviewState {
+  AI_SUGGESTED
+  APPROVED
+  DRAFT
+  NEEDS_REVISION
+  REJECTED
+  UNDER_REVIEW
+}
+
+type Subscription {
+  activeVersionChanged: ContentVersion!
+  aiContentGenerated: ContentVersion!
+  campaignCreated: Campaign!
+  campaignDeleted: ID!
+  campaignUpdated: Campaign!
+  contentPieceCreated: ContentPiece!
+  contentPieceUpdated: ContentPiece!
+  contentTranslated: ContentVersion!
+  versionUpdated: ContentVersion!
+}
+
+input TranslateContentInputType {
+  contentVersionId: String!
+  provider: AiProvider
+  targetLanguage: String!
+}
+
+input UpdateCampaignInputType {
+  description: String
+  name: String
+  status: CampaignStatus
+  targetLanguages: [String!]
+  targetMarkets: [String!]
+}
+
+input UpdateContentPieceInputType {
+  briefing: String
+  keywords: [String!]
+  reviewState: ReviewState
+  targetAudience: String
+  title: String
+  tone: String
+}
+
+input UpdateVersionInputType {
+  content: String!
+  id: String!
+  reviewNotes: String
+}
+
+enum VersionType {
+  AI_GENERATED
+  AI_TRANSLATED
+  HUMAN_EDITED
+  ORIGINAL
+}
